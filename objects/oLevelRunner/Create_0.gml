@@ -10,5 +10,5 @@ var lay_id = layer_get_id("Background");
 var back_id = layer_background_get_id(lay_id);
 sprite_index = layer_background_get_sprite(back_id)
 pars = [[-1,0,1,-1,-1,-1],
-		[2,3,-1,-1,0],
-		[-1,-1,-1,-1]]
+		[2,3,-1,-1,0,-1],
+		[-1,-1,-1,-1,-1,-1]]
