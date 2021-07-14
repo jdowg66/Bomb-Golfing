@@ -11,7 +11,8 @@ bToss = 8
 enum pState {
 	normal,
 	hold,
-	dead
+	dead,
+	pause
 }
 state = pState.dead
 held = 0
@@ -26,3 +27,8 @@ unheld = false
 firstDead = true
 fanTimer = 0
 bombHold = false
+oldX = x
+oldY = y
+lazyX = x
+lazyY = y
+oneWin = true

@@ -27,7 +27,7 @@ if(trans && !moving ){
 	with(instance_create_layer(x-view_w_half,y,"particle",oTrans)){ vert = false; offX = -oCamera.view_w_half}
 	moving = true
 	if(in){
-		show_debug_message("go in")
+		//show_debug_message("go in")
 	counter = 0
 	}
 	else{
@@ -36,21 +36,21 @@ if(trans && !moving ){
 }
 else if(trans && in){
 	counter++
-	show_debug_message("zoom in " + string(counter))
+	//show_debug_message("zoom in " + string(counter))
 	if(counter >23){
 		in = false
-		if(instance_exists(oPlayer)){
+		if(instance_exists(oPlayer) && oPlayer.state != pState.pause){
 		room = DeathRoom
 		}
 		else{
-			show_debug_message("did we get here")
+			//show_debug_message("did we get here")
 			smooth = true
 			room = goRoom	
 		}
 	}
 }
 else if(trans){
-	show_debug_message("how did we go out")
+//	show_debug_message("how did we go out")
 	if(counter > 23){
 	with(instance_create_layer(x,y+view_h_half,"particle",oTrans)){ vert = true;offY = oCamera.view_h_half}
 	with(instance_create_layer(x,y-view_h_half,"particle",oTrans)){ vert = true; offY = -oCamera.view_h_half}

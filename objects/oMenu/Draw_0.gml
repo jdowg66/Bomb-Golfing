@@ -4,29 +4,32 @@ pal_swap_set(try_palates, oLevelRunner.palate, false)
 for(j = 0; j < array_height_2d(levels); j++){
 	for(i = 0; i < array_length_2d(levels,j); i++){
 		if(oLevelRunner.pars[j,i] <0){
-			draw_sprite(nova_levels2, 1,100+x+200*i, 100+y+200*j)
+			draw_sprite(nova_levels2, 1,140+x+200*i, 100+y+200*j)
 		}
 		else{
-			draw_sprite(nova_levels2, 0,100+x+200*i, 100+y+200*j)
+			draw_sprite(nova_levels2, 0,140+x+200*i, 100+y+200*j)
 		}
 		if(oLevelRunner.pars[j,i] == 3){
-		draw_sprite(nova_medals_clear, 0, 100+x+200*i - 24, 100+y+200*j + 48 + 24)
-		draw_sprite(nova_medals_clear, 2, 100+x+200*i + 24, 100+y+200*j + 48 + 24)
+			//both bomb and blocks
+		draw_sprite(nova_medals_clear, 0, 140+x+200*i - 24, 100+y+200*j + 48 + 24)
+		draw_sprite(nova_medals_clear, 2, 140+x+200*i + 24, 100+y+200*j + 48 + 24)
 		}
 		else if(oLevelRunner.pars[j,i] == 1){
-		draw_sprite(nova_medals_clear, 0, 100+x+200*i - 24, 100+y+200*j + 48 + 24)
-		draw_sprite(nova_medals_clear, 3, 100+x+200*i + 24, 100+y+200*j + 48 + 24)
+			//blocks but not bombs
+		draw_sprite(nova_medals_clear, 0, 140+x+200*i - 24, 100+y+200*j + 48 + 24)
+		draw_sprite(nova_medals_clear, 3, 140+x+200*i + 24, 100+y+200*j + 48 + 24)
 		}
 		else if(oLevelRunner.pars[j,i] == 2){
-		draw_sprite(nova_medals_clear, 1, 100+x+200*i - 24, 100+y+200*j + 48 + 24)
-		draw_sprite(nova_medals_clear, 2, 100+x+200*i + 24, 100+y+200*j + 48 + 24)
+			//bombs but not blocks
+		draw_sprite(nova_medals_clear, 1, 140+x+200*i - 24, 100+y+200*j + 48 + 24)
+		draw_sprite(nova_medals_clear, 2, 140+x+200*i + 24, 100+y+200*j + 48 + 24)
 		}
 		else {
-		draw_sprite(nova_medals_clear, 1, 100+x+200*i - 24, 100+y+200*j + 48 + 24)
-		draw_sprite(nova_medals_clear, 3, 100+x+200*i + 24, 100+y+200*j + 48 + 24)	
+		draw_sprite(nova_medals_clear, 1, 140+x+200*i - 24, 100+y+200*j + 48 + 24)
+		draw_sprite(nova_medals_clear, 3, 140+x+200*i + 24, 100+y+200*j + 48 + 24)	
 		}
 		if(j == selectX && i == selectY){
-			draw_sprite(nova_cursor,image_index,100+x+200*i, 100+y+200*j)
+			draw_sprite(nova_cursor,image_index,140+x+200*i, 100+y+200*j)
 		}
 	}
 	var name =  room_get_name(levels[selectX,selectY])

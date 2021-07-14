@@ -2,6 +2,7 @@
 if(ignite){
 	poor = true
 	if(timer == -1){
+		//mask_index = nova_bomb
 		instance_create_layer(x,y,"instances",oBlast);
 		audio_play_sound(boom,1,false); timer = 15; 
 		image_index = 0; image_speed = 1;
@@ -17,6 +18,7 @@ if(ignite){
 	timer--;
 }
 else{
+	//mask_index = sEmpty
 	image_speed = 0
 	if(anime ==0){
 	if(image_index ==0){
@@ -28,7 +30,7 @@ else{
 	anime = 10
 	}
 	anime--;
-
+//mask_index = nova_bomb
 if(momx != 0 && place_meeting(x,y+1,oWall)){
 	momx -= 0.5*sign(momx)	
 	if(abs(momx) < 1){
@@ -72,14 +74,20 @@ else{
 	poor = false
 	}
 }
-if(oPlayer.state == pState.hold){
-	momy = 0	
-	momx = 0
+if(place_meeting(x,y,oRadarLazer) && !delay){
+	oPlayer.bombHold = false
+	delay = true
 }
 if(place_meeting(x,y,oBombLazer)){
 	for(i = 0; i < 10; i++){instance_create_layer(x,y,"particle",oPoof)}
 	instance_destroy();	
 }
+//mask_index = sEmpty
+if(oPlayer.state == pState.hold){
+	momy = 0	
+	momx = 0
+}
+
 if(oPlayer.state = pState.dead){
 	for(i = 0; i < 10; i++){instance_create_layer(x,y,"particle",oPoof)}
 	instance_destroy()	
@@ -87,8 +95,4 @@ if(oPlayer.state = pState.dead){
 
 if(sd ==1){
 	detonate = true
-}
-if(place_meeting(x,y,oRadarLazer) && !delay){
-	oPlayer.bombHold = false
-	delay = true
 }

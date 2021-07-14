@@ -1,5 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
+oldX = x
+oldY = y
 key_left = keyboard_check(vk_left)
 key_right = keyboard_check(vk_right)
 key_up = keyboard_check(vk_up)
@@ -32,6 +34,7 @@ switch(state){
 	{
 		if(key_bomb && instance_exists(oBomb) && bombHold){
 			bombHold = false
+			oLevelRunner.bombs++
 			with(oBomb){
 				ignite = true;	
 				oCamera.shake_remain = 6
@@ -86,42 +89,44 @@ switch(state){
 					if(oPlayer.ydir == 0){
 						if(oPlayer.buffY == -1){
 							if(oPlayer.xdir == 0 && oPlayer.buffX != 0){
-								momx = oPlayer.buffX*abs(oPlayer.hsp) + oPlayer.buffX*oPlayer.bToss / 8
+								momx = /*oPlayer.buffX*abs*/(oPlayer.hsp) + oPlayer.buffX*oPlayer.bToss / 8
 							}
 							else{
-								momx = oPlayer.xdir*abs(oPlayer.hsp) + oPlayer.xdir*oPlayer.bToss / 8
+								momx =/* oPlayer.xdir*abs*/(oPlayer.hsp) + oPlayer.xdir*oPlayer.bToss / 8
 							}
 						}
 						else if(oPlayer.buffY ==  1){
+						
 							if(oPlayer.xdir == 0 && oPlayer.buffX != 0){
-								momx = oPlayer.buffX*abs(oPlayer.hsp)	+ oPlayer.buffX*oPlayer.bToss / 1
+								momx =/* oPlayer.buffX*abs*/(oPlayer.hsp)	+ oPlayer.buffX*oPlayer.bToss / 1
 							}
 							else{
-								momx = oPlayer.xdir*abs(oPlayer.hsp)	+ oPlayer.xdir*oPlayer.bToss / 1
+								momx =/* oPlayer.xdir*abs*/(oPlayer.hsp)	+ oPlayer.xdir*oPlayer.bToss / 1
 							}
 						}
 						else if(oPlayer.xdir == 0 && oPlayer.buffX != 0){
-							momx = oPlayer.buffX*abs(oPlayer.hsp) 	+ oPlayer.buffX*oPlayer.bToss / 2
+							momx =/* oPlayer.buffX*abs*/(oPlayer.hsp) 	+ oPlayer.buffX*oPlayer.bToss / 2
 						}
 						else{
-							momx = oPlayer.xdir*abs(oPlayer.hsp) 	+ oPlayer.xdir*oPlayer.bToss / 2
+							momx = /*oPlayer.xdir*abs*/(oPlayer.hsp) 	+ oPlayer.xdir*oPlayer.bToss / 2
 						}
 					}
 					else if(oPlayer.ydir == -1){
 						if(oPlayer.xdir == 0 && oPlayer.buffX != 0){
-							momx = oPlayer.buffX*abs(oPlayer.hsp) + oPlayer.buffX*oPlayer.bToss / 8
+							momx = /*oPlayer.buffX*abs*/(oPlayer.hsp) + oPlayer.buffX*oPlayer.bToss / 8
 						}
 						else{
-							momx = oPlayer.xdir*abs(oPlayer.hsp) + oPlayer.xdir*oPlayer.bToss / 8
+							momx =/* oPlayer.xdir*abs */(oPlayer.hsp) + oPlayer.xdir*oPlayer.bToss / 8
 						}
 					}
 					else{
+							
 						oPlayer.unheld = true
 						if(oPlayer.xdir == 0 && oPlayer.buffX != 0){
-							momx = oPlayer.buffX*abs(oPlayer.hsp)	+ oPlayer.buffX*oPlayer.bToss / 1
+							momx = /*oPlayer.buffX*abs*/(oPlayer.hsp)	+ oPlayer.buffX*oPlayer.bToss / 1
 						}
 						else{
-							momx = oPlayer.xdir*abs(oPlayer.hsp)	+ oPlayer.xdir*oPlayer.bToss / 1
+							momx = /*oPlayer.xdir*abs*/(oPlayer.hsp)	+ oPlayer.xdir*oPlayer.bToss / 1
 						}
 					}
 				}
@@ -183,9 +188,14 @@ switch(state){
 			}
 		}
 	}break;
+	case pState.pause:
+	{
+		x = oldX
+		y = oldY
+	}break;
 }
 if(place_meeting(x,y,oBomb)){
-	with(oBomb){
+	with(instance_nearest(x,y,oBomb)){
 		if(	ignite && !blown){
 			other.ghost = 30
 			blown = true
@@ -197,7 +207,7 @@ if(place_meeting(x,y,oBomb)){
 			else{
 				oPlayer.vsp = yblast
 			}
-			show_debug_message(string(point_direction(x,y,oPlayer.x,oPlayer.y)) + "  " + string(oPlayer.hsp) + "  " + string(oPlayer.vsp))
+			//show_debug_message(string(point_direction(x,y,oPlayer.x,oPlayer.y)) + "  " + string(oPlayer.hsp) + "  " + string(oPlayer.vsp))
 			mask_index = sEmpty
 		}
 	}
@@ -302,7 +312,15 @@ if(ghost > 0 ){
 if(place_meeting(x,y,oFlag)){
 	with(instance_place(x,y,oFlag)){
 		if(!death){
-			room = MainRoom	
+			if(other.oneWin){
+				instance_create_layer(x,y,"particle",oWin)
+				other.oneWin = false
+			}
+			for(i = 0; i < 2; i++){
+				instance_create_layer(x,y,"particle",oPoof)	
+			}
+			state = pState.pause
+			//room = MainRoom	
 		}
 		else{
 			//oPlayer.state = pState.dead
@@ -341,4 +359,28 @@ if(vsp > 0){
 }
 else if(vsp < 0){
 	image_index = 0	
+}
+if(x < 0 || x > room_width){
+	x = oldX	
+	hsp = 0
+	vsp = 0
+	show_debug_message("warp")
+}
+if(y < 0 || y > room_height){
+	y = oldY	
+	hsp = 0
+	vsp = 0
+	show_debug_message("warp")
+}
+if(place_meeting(x,y,oWall)){
+	x = lazyX
+	y = lazyY
+	oldX = x
+	oldY = y
+	hsp = 0
+	vsp = 0
+}
+if(state == pState.pause){
+	x = oldX
+	y = oldY
 }

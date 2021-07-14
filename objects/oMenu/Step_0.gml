@@ -24,6 +24,8 @@ if(selectY > array_length_2d(levels,selectX) - 1){
 	selectY = array_length_2d(levels,selectX) - 1	
 }
 if(key_select){
+	oLevelRunner.levelX = selectX
+	oLevelRunner.levelY = selectY
 	oCamera.in = true
 	//oCamera.smooth = true
 	oCamera.goRoom = levels[selectX,selectY]	

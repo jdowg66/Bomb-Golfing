@@ -5,3 +5,4 @@ for(j = 0; j < 7; j++){
 		image_angle = irandom_range(0,359)
 	}
 }
+oLevelRunner.blocks++

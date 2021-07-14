@@ -5,6 +5,8 @@ if(key_bug){
 	palate = (palate+1)% const
 }
 if(currRoom != room){
+	bombs = 0
+	blocks = 0
 	if(room == DeathRoom){
 		room = currRoom	
 		oCamera.smooth = true

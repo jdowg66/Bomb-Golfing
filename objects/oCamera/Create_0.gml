@@ -17,3 +17,4 @@ counter = 0
 smooth = false
 trans = false
 goRoom = DeathRoom
+
